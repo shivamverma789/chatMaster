@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatMaster</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/resultPage.css">
+
+</head>
+<body>
+  <div class="results-container">
+    <div class="results-header">
+      <h1>Quiz Results</h1>
+      <div class="score-card">
+        <div class="score-circle">
+          <svg viewBox="0 0 36 36" class="score-circle-svg">
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#334155" stroke-width="3"/>
+            <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#a855f7" stroke-width="3" stroke-dasharray="<%= (score/questions.length) * 100 %>, 100"/>
+          </svg>
+          <div class="score-text">
+            <span class="score-number"><%= score %></span>
+            <span class="score-total">/ <%= questions.length %></span>
+          </div>
+        </div>
+        <p class="score-percentage"><%= Math.round((score/questions.length) * 100) %>% Correct</p>
+      </div>
+    </div>
+
+    <div class="answers-section">
+      <h2>Answer Summary</h2>
+      <div class="answers-list">
+        <% questions.forEach((question, index) => { %>
+          <div class="answer-card <%= userAnswers[`q${index}`] === userAnswers[`correct${index}`] ? 'correct' : 'incorrect' %>">
+            <div class="question-header">
+              <span class="question-number">Question <%= index + 1 %></span>
+              <span class="status-badge">
+                <% if(userAnswers[`q${index}`] === userAnswers[`correct${index}`]) { %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="status-icon"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Correct
+                <% } else { %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="status-icon"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  Incorrect
+                <% } %>
+              </span>
+            </div>
+            
+            <p class="question-text"><%= question[0] %></p>
+            
+            <div class="options-grid">
+              <% ['A', 'B', 'C', 'D'].forEach((option, optionIndex) => { %>
+                <div class="option <%= userAnswers[`q${index}`] === option ? 'user-selected' : '' %> <%= userAnswers[`correct${index}`] === option ? 'correct-answer' : '' %>">
+                  <span class="option-label"><%= option %>.</span>
+                  <span class="option-text"><%= question[optionIndex + 1] %></span>
+                </div>
+              <% }); %>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <a href="/quiz" class="home-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        Back to Home
+      </a>
+      <button class="share-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="button-icon"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+        Share Results
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('.share-button').addEventListener('click', async () => {
+      try {
+        await navigator.share({
+          title: 'My Quiz Results',
+          text: 'I scored <%= score %> out of <%= questions.length %> on the quiz!',
+          url: window.location.href
+        });
+      } catch (err) {
+        console.log('Share failed:', err.message);
+      }
+    });
+  </script>
+</body>
+</html>

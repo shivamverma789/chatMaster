@@ -1,0 +1,280 @@
+
+body {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #e2e8f0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.results-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.results-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 2rem;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.score-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 1rem;
+  border: 1px solid #334155;
+}
+
+.score-circle {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 1rem;
+}
+
+.score-circle-svg {
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.score-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.score-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #a855f7;
+}
+
+.score-total {
+  font-size: 1.25rem;
+  color: #94a3b8;
+}
+
+.score-percentage {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+.answers-section {
+  margin-top: 3rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #e2e8f0;
+}
+
+.answers-list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.answer-card {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid #334155;
+  animation: slideIn 0.5s ease-out;
+}
+
+.answer-card.correct {
+  border-color: #10b981;
+}
+
+.answer-card.incorrect {
+  border-color: #ef4444;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.question-number {
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.correct .status-badge {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.incorrect .status-badge {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.status-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.question-text {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-bottom: 1.5rem;
+}
+
+.options-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 0.75rem;
+  border: 1px solid #334155;
+}
+
+.option.user-selected {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: #a855f7;
+}
+
+.option.correct-answer {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+}
+
+.option-label {
+  font-weight: 600;
+  color: #94a3b8;
+  min-width: 2rem;
+}
+
+.option-text {
+  color: #e2e8f0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.home-button, .share-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.home-button {
+  background: rgba(30, 41, 59, 0.5);
+  color: #e2e8f0;
+  border: 1px solid #334155;
+  text-decoration: none;
+}
+
+.share-button {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  color: white;
+  border: none;
+}
+
+.button-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.home-button:hover, .share-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .results-container {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .score-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .score-number {
+    font-size: 2rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .home-button, .share-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

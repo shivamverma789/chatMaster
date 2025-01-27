@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatMaster</title>
+    <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">ChatMaster</a>
+        <div class="navbar-links">
+            <a href="http://localhost:3000/">ChatBot</a>
+            <a href="http://localhost:3000/image">Image Analyzer</a>
+            <a href="http://localhost:3000/quiz">AI Quiz</a>
+        </div>
+    </nav>
+    
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>ChatMaster</h1>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Messages will be displayed here -->
+            <div class="message server-message">Hola amigo! How can I help you today?</div>
+        </div>
+        <form class="chat-input-form" id="chatForm" action="/" method="post">
+            <div class="input-container">
+                <input type="text" name="prompt" id="userInput" placeholder="Type your message here..." required>
+                <input type="file" id="fileInput" style="display: none;">
+            </div>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        // Attach event listener to the form submission
+        document.getElementById('chatForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent the form from reloading the page
+
+            const userInput = document.getElementById('userInput').value; // Get user input
+            const chatMessages = document.getElementById('chatMessages'); // Chat messages container
+
+            // Add user message to the chat
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message user-message';
+            userMessage.textContent = userInput;
+            chatMessages.appendChild(userMessage);
+            
+            function formatText(text) {
+                text = text.replace(/\*\*(.*?)\*\*/g, `<strong>$1</strong>`);
+                
+                // Replace \boxed{value} with <span class="boxed">value</span> for boxed text
+                text = text.replace(/\\boxed{(.*?)}/g, `<span class="boxed">$1</span>`);
+                
+                return text;
+            }
+
+            // Clear the input field
+            document.getElementById('userInput').value = '';
+
+            // Scroll to the latest message
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                // Send the user input to the backend
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: userInput }),
+                });
+
+                const data = await response.json();
+
+                
+                // Add the server response to the chat
+                const serverMessage = document.createElement('div');
+                serverMessage.className = 'message server-message';
+                if (data.result) {
+                    serverMessage.innerHTML = formatText(data.result);
+                } else if (data.err) {
+                    serverMessage.innerHTML = `Error: ${data.err}`;
+                }
+                chatMessages.appendChild(serverMessage);
+
+                // Scroll to the latest message
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (err) {
+                // Handle any errors during the fetch
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'message error-message';
+                errorMessage.textContent = `Error: ${err.message}`;
+                chatMessages.appendChild(errorMessage);
+
+                // Scroll to the latest message
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
+

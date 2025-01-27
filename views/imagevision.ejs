@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatMaster</title>
+    <link rel="stylesheet" href="/stylesheets/imageVision.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">ChatMaster</a>
+        <div class="navbar-links">
+            <a href="http://localhost:3000/">ChatBot</a>
+            <a href="http://localhost:3000/image">Image Analyzer</a>
+            <a href="http://localhost:3000/quiz">AI Quiz</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="upload-card">
+            <div class="icon-container">
+                <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+            </div>
+            
+            <h1>Image Analyzer</h1>
+
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label>Upload Image</label>
+                    <div class="file-upload-container">
+                        <input type="file" name="profileImage" id="file-upload">
+                        <label for="file-upload" class="file-upload-label" id="upload-label">
+                            <svg class="image-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <p>Click or drag to upload</p>
+                        </label>
+                        <img id="preview-image" class="preview-image" alt="Preview">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" name="text" placeholder="Enter description...">
+                </div>
+
+                <button type="submit" id="submitButton">Upload</button>
+            </form>
+
+            <div id="responseContainer">
+                <div class="response-header">
+                    <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div class="response-content">
+                        <h3>Response</h3>
+                        <p id="responseText">No response yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const fileInput = document.getElementById('file-upload');
+        const previewImage = document.getElementById('preview-image');
+        const uploadLabel = document.getElementById('upload-label');
+        const responseText = document.getElementById('responseText');
+        const responseContainer = document.getElementById('responseContainer');
+        const submitButton = document.getElementById('submitButton');
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    previewImage.src = reader.result;
+                    previewImage.style.display = 'block';
+                    uploadLabel.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        uploadForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            submitButton.disabled = true;
+            submitButton.textContent = 'Uploading...';
+
+            const formData = new FormData(uploadForm);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    responseContainer.style.display = 'block';
+                    responseText.textContent = data.result || 'No result returned.';
+                } else {
+                    responseText.textContent = `Error: ${response.statusText}`;
+                    responseContainer.style.display = 'block';
+                }
+            } catch (error) {
+                responseText.textContent = `Error: ${error.message}`;
+                responseContainer.style.display = 'block';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Upload';
+            }
+        });
+    </script>
+</body>
+</html>

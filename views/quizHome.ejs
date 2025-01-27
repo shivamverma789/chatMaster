@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatMaster</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/quizHome.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="#" class="navbar-brand">ChatMaster</a>
+    <div class="navbar-links">
+        <a href="http://localhost:3000/">ChatBot</a>
+        <a href="http://localhost:3000/image">Image Analyzer</a>
+        <a href="http://localhost:3000/quiz">AI Quiz</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>AI Quiz Generator</h1>
+    <p>Transform any topic into an engaging quiz experience</p>
+    
+    <form action="/generate-quiz" method="POST">
+      <label for="topic">What would you like to learn about?</label>
+      <input type="text" id="topic" name="topic" placeholder="Enter any topic..." required>
+      <div class="button-container">
+        <button type="submit">Generate Quiz</button>
+      </div>
+    </form>
+
+    <div class="rules-section">
+      <p>Quiz Rules</p>
+      <ul>
+        <li>
+          <strong>Topic Selection</strong>
+          Choose any topic you're interested in and our AI will generate questions for you.
+        </li>
+        <li>
+          <strong>Time Limit</strong>
+          You'll have a set time to complete the quiz. Stay on track!
+        </li>
+        <li>
+          <strong>Answering Questions</strong>
+          Select the correct answer for each question by clicking on the corresponding option.
+        </li>
+        <li>
+          <strong>Result Display</strong>
+          Once the quiz is completed, you'll be shown your score along with the correct answers.
+        </li>
+        <li>
+          <strong>Accuracy</strong>
+          The more accurate you are, the higher your score will be!
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

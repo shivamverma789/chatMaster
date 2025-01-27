@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatMaster</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/quizPage.css">
+
+</head>
+<body>
+  <div class="quiz-container">
+    <div class="quiz-header">
+      <h1>Your Quiz</h1>
+      <div class="timer-container">
+        <div class="timer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="timer-icon"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span id="time"></span>
+        </div>
+      </div>
+    </div>
+
+    <form action="/submit-quiz" method="POST" class="quiz-form">
+      <% questions.forEach((question, index) => { %>
+        <div class="question-card">
+          <p class="question-text"><%= question[0] %></p>
+          <div class="options-grid">
+            <label class="option-label">
+              <input type="radio" name="q<%= index %>" value="A" required>
+              <span class="option-text"><%= question[1] %></span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="q<%= index %>" value="B">
+              <span class="option-text"><%= question[2] %></span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="q<%= index %>" value="C">
+              <span class="option-text"><%= question[3] %></span>
+            </label>
+            <label class="option-label">
+              <input type="radio" name="q<%= index %>" value="D">
+              <span class="option-text"><%= question[4] %></span>
+            </label>
+          </div>
+          <input type="hidden" name="correct<%= index %>" value="<%= question[5] %>">
+        </div>
+      <% }); %>
+      
+      <div class="submit-container">
+        <button type="submit" class="submit-button">
+          Submit Quiz
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="submit-icon"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    let timeLeft = 120;
+    const timerElement = document.getElementById('time');
+
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      
+      if (timeLeft === 0) {
+        showTimeUpModal();
+        setTimeout(() => {
+          document.querySelector('form').submit();
+        }, 2000);
+      } else {
+        timeLeft--;
+      }
+    }
+
+    function showTimeUpModal() {
+      const modal = document.createElement('div');
+      modal.className = 'time-up-modal';
+      modal.innerHTML = `
+        <div class="modal-content">
+          <h2>Time's Up!</h2>
+          <p>Submitting your answers...</p>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+  </script>
+</body>
+</html>

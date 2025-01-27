@@ -1,0 +1,226 @@
+
+/* Modern Dark Theme Styles */
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #e2e8f0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: rgba(15, 23, 42, 0.8);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #334155;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    text-decoration: none;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.navbar-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+    color: #e2e8f0;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    animation: fadeIn 0.5s ease-out;
+    flex: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #a855f7, #ec4899);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+}
+
+p {
+    font-size: 1.125rem;
+    color: #94a3b8;
+    margin-bottom: 2rem;
+}
+
+form {
+    margin-bottom: 3rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+    color: #e2e8f0;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    background: rgba(30, 41, 59, 0.5);
+    border: 2px solid #334155;
+    border-radius: 0.75rem;
+    color: #e2e8f0;
+    transition: all 0.3s ease;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #a855f7;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+    color: white;
+    font-size: 1.125rem;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px -1px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.06);
+    opacity: 0.95;
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Quiz Rules Section */
+.rules-section {
+    background: rgba(30, 41, 59, 0.5);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-top: 3rem;
+    border: 1px solid #334155;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.rules-section p {
+    color: #e2e8f0;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 1.25rem;
+    color: #94a3b8;
+}
+
+li:before {
+    content: "•";
+    color: #a855f7;
+    font-size: 1.5rem;
+    position: absolute;
+    left: 0.5rem;
+    top: -0.25rem;
+}
+
+li strong {
+    color: #e2e8f0;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+    width: 95%;
+    padding: 2rem 1rem;
+    }
+
+    h1 {
+    font-size: 2.5rem;
+    }
+
+    input[type="text"] {
+    padding: 0.875rem 1rem;
+    }
+
+    button {
+    padding: 0.875rem 2rem;
+    }
+
+    .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    }
+
+    .navbar-links {
+    margin-top: 0.5rem;
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.container > * {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.container > *:nth-child(1) { animation-delay: 0.1s; }
+.container > *:nth-child(2) { animation-delay: 0.2s; }
+.container > *:nth-child(3) { animation-delay: 0.3s; }
+.container > *:nth-child(4) { animation-delay: 0.4s; }
