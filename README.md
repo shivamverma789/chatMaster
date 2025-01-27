@@ -47,6 +47,8 @@ Chat Master is a versatile web application with three core functionalities: a ch
 
 3. npm install
 
+4. create .env file and add API_KEY value in that . 
+
 ## Usage
 
 1. node app.js
