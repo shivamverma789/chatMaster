@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const fetch = require('node-fetch');  
+// const fetch = require('node-fetch');  
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const multer = require("multer");
 const fs = require("fs");
@@ -47,7 +47,7 @@ async function generateMCQsFromTopic(topic) {
 }
 
 /* GET routes */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index');
 });
 
@@ -74,7 +74,7 @@ router.post('/', async function(req, res, next) {
 
 
 //post route for image analyzer
-router.post("/upload",upload.single("profileImage"),(req,res)=>{
+router.post("/upload",upload.fields("profileImage"),(req,res)=>{
   try{
       if (!req.file || !req.body.text) {
           return res.status(400).send({ error: "Missing file or text input." });
@@ -133,9 +133,14 @@ router.post('/submit-quiz', (req, res) => {
 
       if (userAnswer === correctAnswer) {
           score++; 
+      }else{
+        if(score>0){
+          score=score-0.25; 
+        }
       }
       }
   });
+  
 
   res.render('resultPage', { score, questions, userAnswers });
 });
